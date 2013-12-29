@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AbstractTimerView">
+
+        <!--default is 1000-->
+        <attr name="tickInterval" format="integer" min="1" />
+
+        <attr name="displayPrecision">
+
+            <!--default-->
+            <enum name="fitTickInterval" value="0" />
+
+            <enum name="seconds" value="1" />
+            <enum name="tenths" value="2" />
+            <enum name="hundredths" value="3" />
+            <enum name="millis" value="4" />
+        </attr>
+
+        <!--default is false-->
+        <attr name="autoStart" format="boolean" />
+
+        <!--Ticking is stopped on windows detached or becoming invisible and no tick callbacks will be received till next attach or become visible by default.-->
+        <!--This does not mean the time is stopped. After next window attach the time showed will match the real period gone from timer start. -->
+        <!--With this on false, ticking will not be stopped on window detach or on getting invisible or gone. -->
+        <!--Stopping is here because even disappeared View will still tick and tick forever-->
+        <!--If you set this to true. You should handle stopping ticking itself to prevent memory and performance leaks from ticking not visible views.-->
+        <!--default is true-->
+        <attr name="pauseTickingOnWindowDisappear" format="boolean" />
+
+    </declare-styleable>
+    <declare-styleable name="CountDownTimerView">
+
+        <!--values are added to each other-->
+        <attr name="countDownMillis" format="integer" min="0" />
+        <attr name="countDownSeconds" format="integer" min="0" />
+        <attr name="countDownMinutes" format="integer" min="0" />
+        <attr name="countDownHours" format="integer" min="0" />
+    </declare-styleable>
+</resources>
