@@ -33,6 +33,12 @@ import java.util.concurrent.TimeUnit;
  */
 public class TimerViewTest extends AndroidTestCase
 {
+	//region Constants
+
+	public static final long TOLERANCE_MS = 2;
+
+	//endregion
+
 	//region Fields
 
 	private TimerView mTestTimerView;
@@ -112,7 +118,6 @@ public class TimerViewTest extends AndroidTestCase
 		int tickCount = 3;
 		final CountDownLatch countDownLatch = new CountDownLatch(tickCount);
 
-		final long toleranceMs = 2;
 		final long tickInterval = mTestTimerView.getTickInterval();
 		final long detachedTime = 30 + tickInterval / 2; //to ensure detaching will break sync
 
@@ -157,17 +162,17 @@ public class TimerViewTest extends AndroidTestCase
 
 		long remainingTime = totalTime - initWaitTime - detachedTime;
 
-		final boolean countedDown = countDownLatch.await(remainingTime + toleranceMs, TimeUnit.MILLISECONDS);
+		final boolean countedDown = countDownLatch.await(remainingTime + TOLERANCE_MS, TimeUnit.MILLISECONDS);
 		String notCountedMessage = "TimerView did not counted " + tickCount + " times in " + totalTime + " with " + detachedTime + "ms detached.";
 		assertTrue(notCountedMessage, countedDown);
 
 		//timer was stopped on last tick - millis should match the period of ticking
 		long elapsed = mTestTimerView.getElapsedMs();
-		boolean syncedElapsed = elapsed % tickInterval < toleranceMs;
+		boolean syncedElapsed = (elapsed + 1) % tickInterval <= TOLERANCE_MS;
 		String notSyncedMessage = String.format("Elapsed %d is not synced with interval %d.", elapsed, tickInterval);
 		assertTrue(notSyncedMessage, syncedElapsed);
 
-		boolean runTooFast = elapsed + toleranceMs < totalTime;
+		boolean runTooFast = elapsed + TOLERANCE_MS < totalTime;
 		String tooFastMessage = String.format("Timer view ticked too fast expected: %d but was: %d", totalTime, elapsed);
 		assertFalse(tooFastMessage, runTooFast);
 	}
@@ -178,7 +183,7 @@ public class TimerViewTest extends AndroidTestCase
 
 	private void prepareTimerView()
 	{
-
+		mTestTimerView.reset();
 	}
 
 	//endregion

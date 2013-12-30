@@ -78,17 +78,36 @@ public class CountDownTimerView extends AbstractTimerView
 
 	//region Properties
 
+	/**
+	 * Returns time in milliseconds for which the view will count down.
+	 *
+	 * @return Total countdown time.
+	 */
 	public long getCountDownTime()
 	{
 		return mCountDownTime;
 	}
 
-	public void setCountDownTime(long countDownMs)
+	/**
+	 * Sets countdown to new value and start countdown again from begin.
+	 * Also sync ticks to start from time of this method call.
+	 *
+	 * @param countDownTime New countdown time
+	 * @throws java.lang.IllegalArgumentException If the countdown value is negative.
+	 */
+	public void setCountDownTime(long countDownTime)
 	{
-		setCountDownTime(countDownMs, true);
+		setCountDownTime(countDownTime, true);
 	}
 
-	public void setCountDownTime(long countDownTime, boolean updateImmediate)
+	/**
+	 * Sets countdown to new value and start countdown again from begin
+	 *
+	 * @param countDownTime New countdown time
+	 * @param syncTicks     If true, will sync ticks to tick from now.
+	 * @throws java.lang.IllegalArgumentException If the countdown value is negative.
+	 */
+	public void setCountDownTime(long countDownTime, boolean syncTicks)
 	{
 		if (countDownTime < 0)
 		{
@@ -97,10 +116,8 @@ public class CountDownTimerView extends AbstractTimerView
 
 		mCountDownTime = countDownTime;
 
-		if (updateImmediate)
-		{
-			updateRemainingTime(getRemainingMs());
-		}
+		//this resets countdown to start from beginning
+		setElapsedMs(0, syncTicks);
 	}
 
 	public long getRemainingMs()

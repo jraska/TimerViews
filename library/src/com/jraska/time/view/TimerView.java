@@ -18,14 +18,13 @@ package com.jraska.time.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import com.jraska.time.common.IStartStop;
 
 public class TimerView extends AbstractTimerView implements IStartStop
 {
 	//region Constants
 
-	private static final String TAG = TimerView.class.getName();
+//	private static final String TAG = TimerView.class.getName();
 
 	//endregion
 
@@ -72,6 +71,19 @@ public class TimerView extends AbstractTimerView implements IStartStop
 		mOnTimerTickListener = onTimerTickListener;
 	}
 
+	//setting elapsed is public now
+	@Override
+	public void setElapsedMs(long elapsedMs)
+	{
+		super.setElapsedMs(elapsedMs);
+	}
+
+	@Override
+	public void setElapsedMs(long elapsedMs, boolean syncTicks)
+	{
+		super.setElapsedMs(elapsedMs, syncTicks);
+	}
+
 	//endregion
 
 	//region AbstractTimerView implementation
@@ -95,8 +107,6 @@ public class TimerView extends AbstractTimerView implements IStartStop
 
 		updateElapsedTime(elapsedMs);
 		notifyListener(elapsedMs);
-
-		Log.d(TAG, "onTickInternal elapsed: " + elapsedMs);
 	}
 
 	//endregion
