@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Josef Raška
+ * Copyright (c) 2014, Josef Raška
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,11 @@ import android.content.Context;
 import android.util.AttributeSet;
 import com.jraska.time.common.IStartStop;
 
+/**
+ * View displaying running time with updates in specified interval.
+ *
+ * @see com.jraska.time.format.IMillisFormatter and its implementation to see how to customize display text.
+ */
 public class TimerView extends AbstractTimerView implements IStartStop
 {
 	//region Constants

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Josef Raška
+ * Copyright (c) 2014, Josef Raška
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,11 @@
 
 package com.jraska.time.format;
 
+/**
+ * Types of fraction of seconds which can be displayed in TimerViews.
+ *
+ * @see com.jraska.time.format.FastSplitSecondFormatter
+ */
 public enum SecondFractionDisplay
 {
 	//region Enum members

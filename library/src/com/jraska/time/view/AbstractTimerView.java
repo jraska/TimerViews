@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Josef Raška
+ * Copyright (c) 2014, Josef Raška
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +28,9 @@ import com.jraska.time.utils.HandlerTicker;
 import com.jraska.time.utils.StopWatch;
 import com.jraska.time.utils.Ticker;
 
+/**
+ * Base class for Views displaying time.
+ */
 public abstract class AbstractTimerView extends TextView implements IStartStop
 {
 	//region Constants

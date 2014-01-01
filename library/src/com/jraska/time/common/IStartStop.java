@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Josef Raška
+ * Copyright (c) 2014, Josef Raška
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 package com.jraska.time.common;
 
 /**
- * Implementations can stop their execution, resume it, and start again from beginning
+ * Implementations can stop their execution, resume it and start again from beginning
  */
 public interface IStartStop
 {

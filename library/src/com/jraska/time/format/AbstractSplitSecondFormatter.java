@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Josef Raška
+ * Copyright (c) 2014, Josef Raška
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,9 @@
 
 package com.jraska.time.format;
 
+/**
+ * Base class for formatters splitting milliseconds to hours, minutes, seconds and milliseconds.
+ */
 public abstract class AbstractSplitSecondFormatter implements IMillisFormatter
 {
 	//region Constants

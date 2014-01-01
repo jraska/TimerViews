@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Josef Raška
+ * Copyright (c) 2014, Josef Raška
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,11 @@
 
 package com.jraska.time.format;
 
+/**
+ * Formatter allowing displaying parts of seconds in TimerViews. Implementation was optimized for performance.
+ *
+ * @see com.jraska.time.format.SecondFractionDisplay
+ */
 public class FastSplitSecondFormatter extends AbstractSplitSecondFormatter implements IMillisFormatter
 {
 	//region Constants

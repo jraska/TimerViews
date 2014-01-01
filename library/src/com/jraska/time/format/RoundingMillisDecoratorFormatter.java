@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Josef Raška
+ * Copyright (c) 2014, Josef Raška
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,10 @@
 package com.jraska.time.format;
 
 /**
- * This class can ensure that hanging milliseconds on screen will be like only values 1.05, 1.10, not 1,06, 1,11 for the interval of 50 ms
+ * Decorator class performing rounding raw milliseconds to specified increment before format them with inner caller.
+ * <p/>
+ * Can ensure that handling milliseconds on screen will be like only values 1.05, 1.10,
+ * not 1,06, 1,11 for the interval of 50 ms.
  */
 public final class RoundingMillisDecoratorFormatter implements IMillisFormatter
 {
@@ -31,6 +34,13 @@ public final class RoundingMillisDecoratorFormatter implements IMillisFormatter
 
 	//region Constructors
 
+	/**
+	 * Wraps existing formatter with rounding to specified increment.
+	 *
+	 * @param formatter Formatter to decorate.
+	 * @param increment Increment of rounding.
+	 * @throws java.lang.IllegalArgumentException If formatter is null or increment is not positive.
+	 */
 	public RoundingMillisDecoratorFormatter(IMillisFormatter formatter, final long increment)
 	{
 		if (formatter == null)
@@ -94,6 +104,14 @@ public final class RoundingMillisDecoratorFormatter implements IMillisFormatter
 		return newMillis;
 	}
 
+	/**
+	 * Decorates existing formatter with rounding for specified increment.
+	 * Does nothing if it is already decorated with same increment.
+	 *
+	 * @param formatter Formatter to decorate.
+	 * @param increment Increment of rounding.
+	 * @return Formatter decorated wth rounding to specified increment.
+	 */
 	public static IMillisFormatter decorateWithRounding(IMillisFormatter formatter, long increment)
 	{
 		//do not decorate already decorated formatters
