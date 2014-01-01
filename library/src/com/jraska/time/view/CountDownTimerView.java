@@ -89,25 +89,12 @@ public class CountDownTimerView extends AbstractTimerView
 	}
 
 	/**
-	 * Sets countdown to new value and start countdown again from begin.
-	 * Also sync ticks to start from time of this method call.
+	 * Sets countdown to new value and start countdown again from begin
 	 *
 	 * @param countDownTime New countdown time
 	 * @throws java.lang.IllegalArgumentException If the countdown value is negative.
 	 */
 	public void setCountDownTime(long countDownTime)
-	{
-		setCountDownTime(countDownTime, true);
-	}
-
-	/**
-	 * Sets countdown to new value and start countdown again from begin
-	 *
-	 * @param countDownTime New countdown time
-	 * @param syncTicks     If true, will sync ticks to tick from now.
-	 * @throws java.lang.IllegalArgumentException If the countdown value is negative.
-	 */
-	public void setCountDownTime(long countDownTime, boolean syncTicks)
 	{
 		if (countDownTime < 0)
 		{
@@ -117,7 +104,7 @@ public class CountDownTimerView extends AbstractTimerView
 		mCountDownTime = countDownTime;
 
 		//this resets countdown to start from beginning
-		setElapsedMs(0, syncTicks);
+		setElapsedMs(0);
 	}
 
 	public long getRemainingMs()
@@ -158,25 +145,25 @@ public class CountDownTimerView extends AbstractTimerView
 		long elapsed = getElapsedMs();
 		long remaining = mCountDownTime - elapsed;
 
-		updateRemainingTime(remaining);
-		notifyCountDown(remaining);
-	}
-
-	protected void updateRemainingTime(long remaining)
-	{
 		//on negative value, remaining is zero and countdown should be stopped
 		if (remaining < 1)
 		{
 			remaining = 0;
 		}
 
-		updateText(remaining);
+		updateRemainingTime(remaining);
+		notifyCountDown(remaining);
 
 		//finish is called after update text to have consistent state on finish event
 		if (remaining == 0)
 		{
 			finish();
 		}
+	}
+
+	private void updateRemainingTime(long remaining)
+	{
+		updateText(remaining);
 	}
 
 	private void finish()

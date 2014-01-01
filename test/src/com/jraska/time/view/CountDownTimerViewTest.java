@@ -16,7 +16,6 @@
 
 package com.jraska.time.view;
 
-import android.test.AndroidTestCase;
 import android.view.LayoutInflater;
 import android.view.View;
 import com.jraska.time.common.StartStopTestPart;
@@ -24,9 +23,39 @@ import com.jraska.time.demo.R;
 
 import java.util.Calendar;
 import java.util.TimeZone;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
-public class CountDownTimerViewTest extends AndroidTestCase
+public class CountDownTimerViewTest extends TimerViewTestBase
 {
+	//region Fields
+
+	private CountDownTimerView mTestCountDownTimerView;
+
+	//endregion
+
+	//region TestCase implementation
+
+	@Override
+	public void setUp() throws Exception
+	{
+		super.setUp();
+
+		mTestCountDownTimerView = (CountDownTimerView) getTestView();
+	}
+
+	//endregion
+
+	//region TimerViewTestBase impl
+
+	@Override
+	protected int getLayoutResId()
+	{
+		return R.layout.countdowntimer_test_main;
+	}
+
+	//endregion
+
 	//region Test methods
 
 	public void testStartStopState() throws Exception
@@ -55,6 +84,58 @@ public class CountDownTimerViewTest extends AndroidTestCase
 		boolean timesMatch = calendarTime == countDownTime;
 
 		assertTrue(String.format("Times are not same for 1:02:15.100 - expected: %d, but was: %d", calendarTime, countDownTime), timesMatch);
+	}
+
+	private String mErrorMessage;
+	private boolean mFinishedCalled;
+
+	public void testListener() throws Exception
+	{
+		long tickInterval = 20;
+		mTestCountDownTimerView.setTickInterval(tickInterval);
+		int tickCount = 3;
+
+		final CountDownLatch countDownLatch = new CountDownLatch(tickCount);
+		mTestCountDownTimerView.setOnCountDownListener(new CountDownTimerView.OnCountDownListener()
+		{
+			@Override
+			public void onCountDownTick(CountDownTimerView countDownTimerView, long remainingMillis)
+			{
+				if (countDownLatch.getCount() == 0)
+				{
+					mErrorMessage = "TimerView ticked too fast.";
+				}
+
+				countDownLatch.countDown();
+			}
+
+			@Override
+			public void onFinish(CountDownTimerView countDownTimerView)
+			{
+				if (countDownLatch.getCount() != 0)
+				{
+					mErrorMessage = "Finished called on and another " + countDownLatch.getCount() + " should come.";
+				}
+
+				mFinishedCalled = true;
+			}
+		});
+
+		long waitTime = (tickCount * tickInterval);
+		mTestCountDownTimerView.setCountDownTime(waitTime);
+
+		mTestCountDownTimerView.restart();
+
+		final boolean tickedRight = countDownLatch.await(waitTime + TOLERANCE_MS, TimeUnit.MILLISECONDS);
+
+		assertTrue(String.format("CountDownTimerView did not ticked %d times in %d ms.", tickCount, waitTime), tickedRight);
+
+		if (mErrorMessage != null)
+		{
+			fail(mErrorMessage);
+		}
+
+		assertTrue("Finished was not called.", mFinishedCalled);
 	}
 
 	//endregion

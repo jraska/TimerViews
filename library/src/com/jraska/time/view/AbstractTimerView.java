@@ -207,32 +207,16 @@ public abstract class AbstractTimerView extends TextView implements IStartStop
 
 	/**
 	 * Sets view time to specified value. This allows move view state to provided value.
-	 * Ticks will be synchronized to tick from the time of calling this method.
 	 *
 	 * @param elapsedMs Not negative to which will be view set.
 	 * @throws java.lang.IllegalArgumentException If the value is negative.
 	 */
 	protected void setElapsedMs(long elapsedMs)
 	{
-		setElapsedMs(elapsedMs, true);
-	}
-
-	/**
-	 * Sets view time to specified value.
-	 *
-	 * @param elapsedMs Not negative to which will be view set.
-	 * @param syncTicks If true, ticking will start with view interval from time of calling this method
-	 * @throws java.lang.IllegalArgumentException If the value is negative.
-	 */
-	protected void setElapsedMs(long elapsedMs, boolean syncTicks)
-	{
 		mStopWatch.setElapsedMs(elapsedMs);
-		if (syncTicks)
-		{
-			mTicker.stop();
-			syncTickerToElapsed();
-			mTicker.start();
-		}
+		mTicker.stop();
+		syncTickerToElapsed();
+		mTicker.start();
 	}
 
 	/**

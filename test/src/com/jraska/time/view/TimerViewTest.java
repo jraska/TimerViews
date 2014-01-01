@@ -16,8 +16,6 @@
 
 package com.jraska.time.view;
 
-import android.os.Looper;
-import android.test.AndroidTestCase;
 import android.view.LayoutInflater;
 import android.view.View;
 import com.jraska.time.common.StartStopTestPart;
@@ -31,18 +29,11 @@ import java.util.concurrent.TimeUnit;
  * and methods contained in {@link com.jraska.time.view.AbstractTimerView}
  * using TimerView as test Object
  */
-public class TimerViewTest extends AndroidTestCase
+public class TimerViewTest extends TimerViewTestBase
 {
-	//region Constants
-
-	public static final long TOLERANCE_MS = 2;
-
-	//endregion
-
 	//region Fields
 
 	private TimerView mTestTimerView;
-	private Looper mTimerViewLooper;
 
 	private final Object mSyncLock = new Object();
 
@@ -55,38 +46,17 @@ public class TimerViewTest extends AndroidTestCase
 	{
 		super.setUp();
 
-		//latch for waiting to not start tests before thread setup is finished
-		final CountDownLatch workerThreadSetupLatch = new CountDownLatch(1);
-
-		Runnable workerRunnable = new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				Looper.prepare();
-
-				mTestTimerView = (TimerView) LayoutInflater.from(getContext()).inflate(R.layout.timer_test_main, null);
-				mTimerViewLooper = Looper.myLooper();
-
-				workerThreadSetupLatch.countDown();
-
-				Looper.loop();
-			}
-		};
-
-		Thread workerThread = new Thread(workerRunnable);
-		workerThread.start();
-
-		//wait for thread to setup
-		final boolean threadInitializedOk = workerThreadSetupLatch.await(500, TimeUnit.MILLISECONDS);
-		assertTrue("Worker thread for HandlerTicker test was not initialized in time.", threadInitializedOk);
+		mTestTimerView = (TimerView) getTestView();
 	}
 
+	//endregion
+
+	//region TimerViewTestBase impl
+
 	@Override
-	protected void tearDown() throws Exception
+	protected int getLayoutResId()
 	{
-		mTestTimerView.stop();
-		mTimerViewLooper.quit();
+		return R.layout.timer_test_main;
 	}
 
 	//endregion
@@ -175,6 +145,44 @@ public class TimerViewTest extends AndroidTestCase
 		boolean runTooFast = elapsed + TOLERANCE_MS < totalTime;
 		String tooFastMessage = String.format("Timer view ticked too fast expected: %d but was: %d", totalTime, elapsed);
 		assertFalse(tooFastMessage, runTooFast);
+	}
+
+	private String mErrorMessage;
+
+	public void testListener() throws Exception
+	{
+		long tickInterval = 20;
+		mTestTimerView.setTickInterval(tickInterval);
+		int tickCount = 3;
+
+		final CountDownLatch countDownLatch = new CountDownLatch(tickCount);
+		mTestTimerView.setOnTimerTickListener(new TimerView.OnTimerTickListener()
+		{
+			@Override
+			public void onTick(TimerView timerView, long elapsedMillis)
+			{
+				if (countDownLatch.getCount() == 0)
+				{
+					mErrorMessage = "TimerView ticked too fast.";
+				}
+
+				countDownLatch.countDown();
+			}
+		});
+
+		mTestTimerView.restart();
+
+		long waitTime = (tickCount * tickInterval);
+		final boolean tickedRight = countDownLatch.await(waitTime + TOLERANCE_MS, TimeUnit.MILLISECONDS);
+
+		mTestTimerView.stop();
+
+		assertTrue(String.format("TimerView did not ticked %d times in %d ms.", tickCount, waitTime), tickedRight);
+
+		if (mErrorMessage != null)
+		{
+			fail(mErrorMessage);
+		}
 	}
 
 	//endregion

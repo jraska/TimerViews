@@ -78,12 +78,6 @@ public class TimerView extends AbstractTimerView implements IStartStop
 		super.setElapsedMs(elapsedMs);
 	}
 
-	@Override
-	public void setElapsedMs(long elapsedMs, boolean syncTicks)
-	{
-		super.setElapsedMs(elapsedMs, syncTicks);
-	}
-
 	//endregion
 
 	//region AbstractTimerView implementation
