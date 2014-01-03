@@ -18,7 +18,47 @@ Then, just add TimerViews as a dependency to your existing project and you're re
 
 Example
 ---
-*coming soon*
+####**TimerView:**
+Simple timer updated each hundredth of second.
+``` xml
+<com.jraska.time.view.TimerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.jraska.time.demo"
+    android:id="@+id/timerView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:tickInterval="10"
+    app:autoStart="true" />
+```
+
+Listening to ticks:
+``` java
+TimerView timerView = (TimerView) findViewById(R.id.timerView);
+timerView.setOnTimerTickListener(new TimerView.OnTimerTickListener()
+{
+	@Override
+	public void onTick(TimerView timerView, long elapsedMillis)
+	{
+		//Do some stuff on tick. For example beep.
+	}
+});
+```
+
+
+
+####**CountDownTimer:**
+Countdown for 1:02:15.5 with update each 100 milliseconds. Starts immediately after inflate.
+``` xml
+<com.jraska.time.view.CountDownTimerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.jraska.time.demo"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:tickInterval="100"
+    app:countDownHours="1"
+    app:countDownMinutes="2"
+    app:countDownSeconds="15"
+    app:countDownMillis="500"
+    app:autoStart="true" />
+```
 
 API Overview
 ---
