@@ -44,22 +44,16 @@ public class TimerView extends AbstractTimerView implements IStartStop
 	public TimerView(Context context)
 	{
 		super(context);
-
-		init();
 	}
 
 	public TimerView(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
-
-		init();
 	}
 
 	public TimerView(Context context, AttributeSet attrs, int defStyle)
 	{
 		super(context, attrs, defStyle);
-
-		init();
 	}
 
 	//endregion
@@ -111,10 +105,6 @@ public class TimerView extends AbstractTimerView implements IStartStop
 	//endregion
 
 	//region Methods
-
-	private void init()
-	{
-	}
 
 	protected void updateElapsedTime(long elapsedMs)
 	{
