@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2014, Josef Raška
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.jraska.time.demo"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/timer_padding">
+
+        <com.jraska.time.view.CountDownTimerView
+            android:id="@+id/countDownTimerView_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:layout_alignParentLeft="true"
+            app:tickInterval="1000"
+            app:displayPrecision="seconds"
+            app:countDownMinutes="1"
+            app:countDownSeconds="0"
+            app:countDownMillis="0"
+            app:autoStart="true" />
+
+        <TextView
+            android:id="@+id/tickTackText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/tick_tack_margin"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:layout_toRightOf="@id/countDownTimerView_1" />
+    </RelativeLayout>
+
+
+    <include
+        layout="@layout/count_down_timer_controls"
+        android:id="@+id/countDownTimerView_1_Controls" />
+
+    <com.jraska.time.view.CountDownTimerView
+        android:id="@+id/countDownTimerView_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/timer_padding"
+        android:textAppearance="?android:textAppearanceLarge"
+        app:tickInterval="100"
+        app:displayPrecision="fitTickInterval"
+        app:countDownMinutes="1"
+        app:autoStart="true" />
+
+    <include
+        layout="@layout/count_down_timer_controls"
+        android:id="@+id/countDownTimerView_2_Controls" />
+
+    <com.jraska.time.view.CountDownTimerView
+        android:id="@+id/countDownTimerView_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/timer_padding"
+        android:textAppearance="?android:textAppearanceLarge"
+        app:tickInterval="10"
+        app:displayPrecision="hundredths"
+        app:countDownMinutes="1"
+        app:countDownMillis="0"
+        app:autoStart="true" />
+
+    <include
+        layout="@layout/count_down_timer_controls"
+        android:id="@+id/countDownTimerView_3_Controls" />
+
+    <com.jraska.time.view.CountDownTimerView
+        android:id="@+id/countDownTimerView_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/timer_padding"
+        android:textAppearance="?android:textAppearanceLarge"
+        app:tickInterval="5"
+        app:displayPrecision="millis"
+        app:countDownMinutes="1"
+        app:autoStart="true" />
+
+    <include
+        layout="@layout/count_down_timer_controls"
+        android:id="@+id/countDownTimerView_4_Controls" />
+
+</LinearLayout>
+
