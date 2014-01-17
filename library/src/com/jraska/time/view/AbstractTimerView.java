@@ -217,9 +217,19 @@ public abstract class AbstractTimerView extends TextView implements IStartStop
 	protected void setElapsedMs(long elapsedMs)
 	{
 		mStopWatch.setElapsedMs(elapsedMs);
-		mTicker.stop();
+
+		boolean tickerRunning = mTicker.isRunning();
+		if (tickerRunning)
+		{
+			mTicker.stop();
+		}
+
 		syncTickerToElapsed();
-		mTicker.start();
+
+		if (tickerRunning)
+		{
+			mTicker.start();
+		}
 	}
 
 	/**
@@ -256,6 +266,11 @@ public abstract class AbstractTimerView extends TextView implements IStartStop
 	public void setPauseTickingOnWindowDisappear(boolean pauseTickingOnWindowDisappear)
 	{
 		mPauseTickingOnWindowDisappear = pauseTickingOnWindowDisappear;
+	}
+
+	Ticker getTicker()
+	{
+		return mTicker;
 	}
 
 	//endregion
@@ -518,10 +533,10 @@ public abstract class AbstractTimerView extends TextView implements IStartStop
 		private final int mDisplayPrecisionValue;
 		private final long mTickInterval;
 
-		public FormatterFactoryParameters(int displayPrecisionValue, long mTickInterval)
+		public FormatterFactoryParameters(int displayPrecisionValue, long tickInterval)
 		{
 			mDisplayPrecisionValue = displayPrecisionValue;
-			this.mTickInterval = mTickInterval;
+			mTickInterval = tickInterval;
 		}
 
 		public int getDisplayPrecisionValue()

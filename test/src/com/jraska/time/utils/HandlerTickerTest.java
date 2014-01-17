@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Josef Raška
+ * Copyright (c) 2014, Josef Raška
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -199,7 +199,7 @@ public class HandlerTickerTest extends TestCase
 	public void testRemainingTimeCounting() throws Exception
 	{
 		final int checkRemainingToNextTickId = 2627727;
-		final int tolerance = 1;
+		final int tolerance = 2;
 		Handler testHandler = new Handler(mTickerLooper)
 		{
 			@Override
@@ -239,11 +239,6 @@ public class HandlerTickerTest extends TestCase
 		{
 			fail(mRemainingTimeFailMessage);
 		}
-	}
-
-	public void testConsistencyOnTickEvent() throws Exception
-	{
-		//TODO
 	}
 
 	//endregion

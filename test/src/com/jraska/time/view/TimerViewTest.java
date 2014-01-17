@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Josef Raška
+ * Copyright (c) 2014, Josef Raška
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -183,6 +183,17 @@ public class TimerViewTest extends TimerViewTestBase
 		{
 			fail(mErrorMessage);
 		}
+	}
+
+	//Tests previous bug, when even stopped view started its ticker on setting elapsed ms
+	public void testNotStartStoppedTickerOnSettingElapsedMs() throws Exception
+	{
+		prepareTimerView();
+
+		mTestTimerView.stop();
+		mTestTimerView.setElapsedMs(234);
+
+		assertFalse("Setting elapsed ms cannot set ticker to run.", mTestTimerView.getTicker().isRunning());
 	}
 
 	//endregion
