@@ -3,6 +3,8 @@ Timer Views
 
 Library to easily display running time in your apps.
 
+![Screenshot](https://github.com/jraska/TimerViews/raw/master/TimerViews.png)
+
 Features
 ---
 * Displaying time with precision to seconds, tenths, hundredths of second or milliseconds.
